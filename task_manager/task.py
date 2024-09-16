@@ -11,3 +11,22 @@ class Task:
         self.completed = False
         self.created_at = datetime.now().isoformat()
         self.completed_at = None
+
+    def to_dict(self):
+        return {
+            "id": self.id,  # Save the UUID
+            "title": self.title,
+            "description": self.description,
+            "completed": self.completed,
+            "created_at": self.created_at,
+            "completed_at": self.completed_at,
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        task = cls(data["title"], data["description"])
+        task.id = data["id"]  # Restore the UUID from the saved data
+        task.completed = data["completed"]
+        task.created_at = data["created_at"]
+        task.completed_at = data["completed_at"]
+        return task
