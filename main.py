@@ -1,6 +1,7 @@
 import argparse
-from task_manager import TaskManager
+from task_manager.manager import TaskManager
 from storage import Storage
+from Commands.commands import create_command
 
 
 def main():
@@ -8,51 +9,37 @@ def main():
     manager = TaskManager(storage)
 
     parser = argparse.ArgumentParser(description="Task Management System")
-    subparsers = parser.add_subparsers(dest="command",
-                                       help="Available commands")
+    subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
-    # Add task
     add_parser = subparsers.add_parser("add", help="Add a new task")
-    add_parser.add_argument("title", help="Task title")
-    add_parser.add_argument("description", help="Task description")
+    add_parser.add_argument("--title", help="Task title")
+    add_parser.add_argument("--description", help="Task description")
 
-    # Complete task
-    complete_parser = subparsers.add_parser("complete",
-                                            help="Mark a task as completed")
-    complete_parser.add_argument("title", help="Task title")
+    complete_parser = subparsers.add_parser("complete", help="Mark a task as completed")
+    complete_parser.add_argument("id", type=str, help="Task UUID")
 
-    # List tasks
     list_parser = subparsers.add_parser("list", help="List all tasks")
-    list_parser.add_argument("--all",
-                             action="store_true",
-                             help="Include completed tasks")
+    list_parser.add_argument(
+        "--incomplete", action="store_true", help="Show only incomplete tasks"
+    )
 
-    # Generate report
     subparsers.add_parser("report", help="Generate a report")
 
     args = parser.parse_args()
 
-    if args.command == "add":
-        task = manager.add_task(args.title, args.description)
-        print(f"Task '{task.title}' added successfully.")
-    elif args.command == "complete":
-        if manager.complete_task(args.title):
-            print(f"Task '{args.title}' marked as completed.")
-        else:
-            print(f"Task '{args.title}' not found.")
-    elif args.command == "list":
-        tasks = manager.list_tasks(include_completed=args.all)
-        if tasks:
-            for task in tasks:
-                status = "Completed" if task.completed else "Pending"
-                print(f"{task.title} - {status}")
-        else:
-            print("No tasks found.")
-    elif args.command == "report":
-        print(manager.generate_report())
+    command = create_command(manager, args)
+    if command:
+        command.execute()
     else:
         parser.print_help()
 
 
 if __name__ == "__main__":
     main()
+
+
+# # python main.py add --title "New Task" --description "Task description"
+# # python main.py list
+# # python main.py list --incomplete
+## python main.py complete id
+# # python main.py report
