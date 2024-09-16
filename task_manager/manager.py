@@ -9,13 +9,13 @@ class TaskManager:
 
     def add_task(self, title, description):
         task = Task(title, description)
-        self.storage.save_task(task)
+        self.storage.add_task(task)
         return task
 
-    def complete_task(self, title):
-        task = self.storage.get_task(title)
+    def complete_task(self, task_id):
+        task = self.storage.get_task_by_id(task_id)
         if task:
-            task.completed = True
+            task.complete()
             self.storage.update_task(task)
             return True
         return False
