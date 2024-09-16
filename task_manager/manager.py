@@ -1,5 +1,5 @@
 from datetime import datetime
-from task import Task
+from task_manager.task import Task
 
 
 class TaskManager:
