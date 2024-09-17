@@ -24,8 +24,6 @@ class TaskManager:
         tasks = self.storage.get_all_tasks()
         if only_incomplete:
             tasks = [task for task in tasks if not task.completed]
-        else:
-            tasks = [task for task in tasks if task.completed]
         return tasks
 
     def generate_report(self):
