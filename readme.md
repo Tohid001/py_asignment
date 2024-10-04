@@ -1,6 +1,6 @@
 # Task Management System
 
-This is a simple command-line (CLI) task management system implemented in Python.
+This simple command-line (CLI) task management system is implemented in Python.
 
 ## Functional Requirements
 
@@ -42,15 +42,11 @@ To run all the unit tests, use the following command:
 python -m unittest discover tests
 ```
 
-## Your Task
+## Final output
+Commands for  CLI tool
 
-**Ensure and validate with tests that the app meets the required functionality** and addresses any bugs. Enhance performance and do optimisations to the best of your knowledge, while refactoring the code for better readability and maintainability. Feel free to make necessary assumptions where applicable.
+1. poetry run python main.py add --title "New Task" --description "Task description"   (add a task using title and description. both are required)
+2. poetry run python main.py list   (all tasks)
+3. poetry run python main.py list --incomplete   (only incomplete tasks)
+4. poetry run python main.py complete id    (complete task by Id. Id is required)
 
-## Submission
-
-Once you are done, please:
-
-1. Push your code to a **public** GitHub repository with at least **read** access
-2. Reply to our email with the repository link to complete your submission within the deadline
-
-Good luck!
